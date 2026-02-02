@@ -1,26 +1,78 @@
-@import "tailwindcss";
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --font-inter: 'Inter', system-ui, sans-serif;
+    --font-lora: 'Lora', Georgia, serif;
+  }
+
+  * {
+    @apply border-gray-800;
+  }
+
+  body {
+    @apply bg-background text-gray-100 antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Selection colors */
+  ::selection {
+    @apply bg-accent-500/30 text-accent-100;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Spiritual UI Components */
+  .prayer-card {
+    @apply bg-surface rounded-lg p-6 border border-gray-800/50 
+           transition-all duration-300 hover:border-primary-500/50
+           hover:shadow-lg hover:shadow-primary-500/10;
+  }
+
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white
+           px-6 py-3 rounded-md font-medium
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  .btn-secondary {
+    @apply bg-surface-elevated hover:bg-surface-overlay text-gray-100
+           px-6 py-3 rounded-md font-medium border border-gray-700
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  /* Counter display */
+  .counter-value {
+    @apply text-4xl font-bold font-serif text-accent-400
+           tracking-tight;
+  }
+
+  /* Loading states */
+  .spinner {
+    @apply animate-spin rounded-full border-2 border-gray-600
+           border-t-primary-500 h-5 w-5;
+  }
+}
+
+@layer utilities {
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-400 to-accent-400
+           bg-clip-text text-transparent;
+  }
+
+  /* Glassmorphism effect */
+  .glass {
+    @apply bg-surface/80 backdrop-blur-md border border-gray-800/50;
+  }
 }

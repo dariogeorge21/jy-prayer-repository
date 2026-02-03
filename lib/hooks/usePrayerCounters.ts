@@ -56,12 +56,15 @@ export function usePrayerCounters() {
           table: 'prayer_counters',
         },
         (payload) => {
+          const newRecord = payload.new as PrayerCounter | null
+          if (!newRecord) return
+          
           setPrayers((current) =>
             current.map((prayer) => {
-              if (prayer.counter?.id === payload.new.id) {
+              if (prayer.counter?.id === newRecord.id) {
                 return {
                   ...prayer,
-                  counter: payload.new as PrayerCounter,
+                  counter: newRecord,
                 }
               }
               return prayer

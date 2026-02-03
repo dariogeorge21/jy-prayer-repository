@@ -6,7 +6,7 @@ export async function GET() {
     const supabase = await createClient()
 
     // Test database connection
-    const { data, error } = await supabase
+    const { data: _data, error } = await supabase
       .from('programs')
       .select('id')
       .limit(1)

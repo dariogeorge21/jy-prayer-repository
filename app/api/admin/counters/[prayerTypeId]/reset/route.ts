@@ -4,11 +4,11 @@ import { createAdminClient } from '@/lib/supabase/server'
 // POST - Reset single counter
 export async function POST(
   _request: NextRequest,
-  { params }: { params: { prayerTypeId: string } }
+  { params }: { params: Promise<{ prayerTypeId: string }> }
 ) {
   try {
     const { supabase } = await createAdminClient()
-    const { prayerTypeId } = params
+    const { prayerTypeId } = await params
 
     const { error } = await supabase.rpc('admin_reset_prayer_counter', {
       p_prayer_type_id: prayerTypeId,

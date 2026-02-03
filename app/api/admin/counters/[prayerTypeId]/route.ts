@@ -4,12 +4,12 @@ import { createAdminClient } from '@/lib/supabase/server'
 // PATCH - Edit counter
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { prayerTypeId: string } }
+  { params }: { params: Promise<{ prayerTypeId: string }> }
 ) {
   try {
     const { supabase } = await createAdminClient()
     const { new_value } = await request.json()
-    const { prayerTypeId } = params
+    const { prayerTypeId } = await params
 
     const { data, error } = await supabase.rpc('admin_edit_prayer_counter', {
       p_prayer_type_id: prayerTypeId,

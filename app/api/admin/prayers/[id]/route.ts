@@ -4,12 +4,12 @@ import { createAdminClient } from '@/lib/supabase/server'
 // PATCH - Update prayer type
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { supabase, adminUser } = await createAdminClient()
     const body = await request.json()
-    const { id } = params
+    const { id } = await params
 
     const { data, error } = await supabase
       .from('prayer_types')
@@ -52,11 +52,11 @@ export async function PATCH(
 // DELETE - Delete prayer type
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { supabase, adminUser } = await createAdminClient()
-    const { id } = params
+    const { id } = await params
 
     // Get prayer type name before deletion
     const { data: prayerType } = await supabase

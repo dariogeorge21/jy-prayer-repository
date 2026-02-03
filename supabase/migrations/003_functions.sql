@@ -437,3 +437,16 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Grant execute to authenticated users
 GRANT EXECUTE ON FUNCTION get_prayer_statistics TO authenticated;
+
+CREATE OR REPLACE FUNCTION count_unique_contributors()
+RETURNS INTEGER AS $$
+BEGIN
+  RETURN (
+    SELECT COUNT(DISTINCT user_identifier)
+    FROM prayer_actions
+    WHERE action_type = 'increment'
+  );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+GRANT EXECUTE ON FUNCTION count_unique_contributors TO authenticated;

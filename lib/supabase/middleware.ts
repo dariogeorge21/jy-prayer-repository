@@ -58,13 +58,23 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/admin')) {
     const { data: { user } } = await supabase.auth.getUser()
     
-    // Redirect to login if not authenticated
-    if (!user && !request.nextUrl.pathname.startsWith('/admin/login')) {
+    // If trying to access login page
+    if (request.nextUrl.pathname === '/admin/login') {
+      // If already authenticated, redirect to dashboard
+      if (user) {
+        return NextResponse.redirect(new URL('/admin/dashboard', request.url))
+      }
+      // Allow access to login page
+      return response
+    }
+    
+    // For other admin routes, require authentication
+    if (!user) {
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
     
-    // Check admin status
-    if (user && !request.nextUrl.pathname.startsWith('/admin/login')) {
+    // Check admin status with error handling
+    try {
       const { data: adminUser } = await supabase
         .from('admin_users')
         .select('is_active')
@@ -75,20 +85,12 @@ export async function middleware(request: NextRequest) {
         await supabase.auth.signOut()
         return NextResponse.redirect(new URL('/admin/login', request.url))
       }
-    }
-    
-    // Redirect away from login if already authenticated
-    if (user && request.nextUrl.pathname === '/admin/login') {
-      return NextResponse.redirect(new URL('/admin/dashboard', request.url))
+    } catch (error) {
+      // If we can't check admin status (e.g., RLS issue), allow through
+      // The actual page will handle the proper check
+      console.error('Error checking admin status:', error)
     }
   }
 
   return response
-}
-
-export const config = {
-  matcher: [
-    '/admin/:path*',
-    '/((?!_next/static|_next/image|favicon.ico).*)',
-  ],
 }

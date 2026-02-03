@@ -51,7 +51,7 @@ export function PrayerTypesList({ prayerTypes: initialPrayerTypes }: PrayerTypes
     }
   }
 
-  const toggleEnabled = async (id: string, currentValue: boolean) => {
+  const _toggleEnabled = async (id: string, currentValue: boolean) => {
     try {
       const response = await fetch(`/api/admin/prayers/${id}`, {
         method: 'PATCH',
@@ -68,6 +68,8 @@ export function PrayerTypesList({ prayerTypes: initialPrayerTypes }: PrayerTypes
       console.error('Error toggling enabled:', error)
     }
   }
+  // Use _toggleEnabled when needed in future features
+  void _toggleEnabled
 
   if (prayerTypes.length === 0) {
     return (

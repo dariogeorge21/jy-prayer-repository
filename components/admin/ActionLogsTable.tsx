@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { formatDateTime, formatRelativeTime } from '@/lib/utils/formatting'
-import { Download, Filter } from 'lucide-react'
+import { Download } from 'lucide-react'
 
 interface ActionLogsTableProps {
   actions: any[]

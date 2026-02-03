@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import type { PrayerWithCounter } from '@/lib/hooks/usePrayerCounters'
 import { usePrayerSubmit } from '@/lib/hooks/usePrayerSubmit'
 import { formatNumber, formatDuration } from '@/lib/utils/formatting'
@@ -13,18 +13,19 @@ export function PrayerCard({ prayer }: PrayerCardProps) {
   const { submitPrayer, isSubmitting, cooldowns } = usePrayerSubmit()
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   
-  const cooldownSeconds = cooldowns[prayer.id] || 0
+  const prayerType = prayer as PrayerWithCounter
+  const cooldownSeconds = cooldowns[prayerType.id] || 0
   const isOnCooldown = cooldownSeconds > 0
 
-  const currentValue = prayer.type === 'count' 
-    ? prayer.counter?.total_count || 0
-    : prayer.counter?.total_time_minutes || 0
+  const currentValue = prayerType.type === 'count' 
+    ? prayerType.counter?.total_count || 0
+    : prayerType.counter?.total_time_minutes || 0
 
   const handleIncrement = async () => {
     setMessage(null)
     
     const result = await submitPrayer({
-      prayerTypeId: prayer.id,
+      prayerTypeId: prayerType.id,
       rateLimitSeconds: parseInt(process.env.NEXT_PUBLIC_RATE_LIMIT_SECONDS || '30'),
     })
 
@@ -40,33 +41,33 @@ export function PrayerCard({ prayer }: PrayerCardProps) {
   return (
     <div className="prayer-card group">
       {/* Icon */}
-      {prayer.icon && (
+      {prayerType.icon && (
         <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-          {prayer.icon}
+          {prayerType.icon}
         </div>
       )}
 
       {/* Prayer Name */}
       <h3 className="text-xl font-semibold text-gray-100 mb-2">
-        {prayer.name}
+        {prayerType.name}
       </h3>
 
       {/* Description */}
-      {prayer.description && (
+      {prayerType.description && (
         <p className="text-sm text-gray-400 mb-4">
-          {prayer.description}
+          {prayerType.description}
         </p>
       )}
 
       {/* Counter Display */}
       <div className="my-6">
         <div className="counter-value">
-          {prayer.type === 'count' 
+          {prayerType.type === 'count' 
             ? formatNumber(currentValue)
             : formatDuration(currentValue)}
         </div>
         <div className="text-sm text-gray-500 mt-1">
-          {prayer.type === 'count' ? 'times' : 'minutes'}
+          {prayerType.type === 'count' ? 'times' : 'minutes'}
         </div>
       </div>
 
@@ -85,9 +86,9 @@ export function PrayerCard({ prayer }: PrayerCardProps) {
           <span>Wait {cooldownSeconds}s</span>
         ) : (
           <span>
-            + {prayer.type === 'count' 
-              ? prayer.increment_value 
-              : `${prayer.time_increment_minutes} min`}
+            + {prayerType.type === 'count' 
+              ? prayerType.increment_value 
+              : `${prayerType.time_increment_minutes} min`}
           </span>
         )}
       </button>

@@ -11,6 +11,11 @@ export interface PrayerWithCounter extends PrayerType {
   counter: PrayerCounter | null
 }
 
+// Type for raw query result where counter comes as array
+interface RawPrayerWithCounter extends PrayerType {
+  counter: PrayerCounter[] | null
+}
+
 export function usePrayerCounters() {
   const [prayers, setPrayers] = useState<PrayerWithCounter[]>([])
   const [loading, setLoading] = useState(true)
@@ -34,7 +39,13 @@ export function usePrayerCounters() {
 
         if (fetchError) throw fetchError
 
-        setPrayers(data as PrayerWithCounter[])
+        // Transform array counter to single counter (take first item)
+        const transformed: PrayerWithCounter[] = (data as RawPrayerWithCounter[] || []).map(prayer => ({
+          ...prayer,
+          counter: prayer.counter?.[0] || null
+        }))
+
+        setPrayers(transformed)
       } catch (err) {
         console.error('Error fetching prayers:', err)
         setError('Failed to load prayers')

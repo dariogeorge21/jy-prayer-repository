@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import type { PrayerWithCounter } from '../../../lib/hooks/usePrayerCounters'
-import { usePrayerSubmit } from '../../../lib/hooks/usePrayerSubmit'
-import { formatNumber, formatDuration } from '../../../lib/utils/formatting'
+import type { PrayerWithCounter } from '@/lib/hooks/usePrayerCounters'
+import { usePrayerSubmit } from '@/lib/hooks/usePrayerSubmit'
+import { formatNumber, formatDuration } from '@/lib/utils/formatting'
 
 interface PrayerCardProps {
   prayer: PrayerWithCounter

@@ -7,7 +7,7 @@ export async function PATCH(
   { params }: { params: { prayerTypeId: string } }
 ) {
   try {
-    const { supabase, adminUser } = await createAdminClient()
+    const { supabase } = await createAdminClient()
     const { new_value } = await request.json()
     const { prayerTypeId } = params
 

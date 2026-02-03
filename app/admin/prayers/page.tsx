@@ -1,7 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { PrayerTypesList } from '@/components/admin/PrayerTypesList'
 import { CreatePrayerTypeButton } from '@/components/admin/CreatePrayerTypeButton'
-import { Plus } from 'lucide-react'
 
 export default async function AdminPrayersPage() {
   const supabase = await createClient()

@@ -40,10 +40,10 @@ export default function AdminLoginPage() {
         throw new Error('You do not have admin access')
       }
 
-      // Update last login
+      // Update last login timestamp (in updated_at since last_login isn't in schema)
       await supabase
         .from('admin_users')
-        .update({ last_login: new Date().toISOString() })
+        .update({ updated_at: new Date().toISOString() })
         .eq('id', authData.user.id)
 
       // Redirect to dashboard

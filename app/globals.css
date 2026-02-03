@@ -1,5 +1,17 @@
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+@import 'tailwindcss';
+
+@theme {
+  --color-background: hsl(0 0% 5%);
+  --color-surface: hsl(0 0% 10%);
+  --color-surface-elevated: hsl(0 0% 15%);
+  --color-surface-overlay: hsl(0 0% 20%);
+  --color-primary-400: hsl(59 89% 50%);
+  --color-primary-500: hsl(59 89% 45%);
+  --color-primary-600: hsl(59 89% 40%);
+  --color-accent-100: hsl(47 100% 80%);
+  --color-accent-400: hsl(47 100% 50%);
+  --color-accent-500: hsl(47 100% 45%);
+}
 
 @layer base {
   :root {
@@ -7,28 +19,21 @@
     --font-lora: 'Lora', Georgia, serif;
   }
 
-  * {
-    @apply border-gray-800;
-  }
-
   body {
     @apply bg-background text-gray-100 antialiased;
     font-feature-settings: 'cv11', 'ss01';
   }
 
-  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
   }
 
-  /* Selection colors */
   ::selection {
     @apply bg-accent-500/30 text-accent-100;
   }
 }
 
 @layer components {
-  /* Spiritual UI Components */
   .prayer-card {
     @apply bg-surface rounded-lg p-6 border border-gray-800/50 
            transition-all duration-300 hover:border-primary-500/50
@@ -51,13 +56,11 @@
            focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-background;
   }
 
-  /* Counter display */
   .counter-value {
     @apply text-4xl font-bold font-serif text-accent-400
            tracking-tight;
   }
 
-  /* Loading states */
   .spinner {
     @apply animate-spin rounded-full border-2 border-gray-600
            border-t-primary-500 h-5 w-5;
@@ -65,13 +68,11 @@
 }
 
 @layer utilities {
-  /* Text gradient */
   .text-gradient {
     @apply bg-gradient-to-r from-primary-400 to-accent-400
            bg-clip-text text-transparent;
   }
 
-  /* Glassmorphism effect */
   .glass {
     @apply bg-surface/80 backdrop-blur-md border border-gray-800/50;
   }

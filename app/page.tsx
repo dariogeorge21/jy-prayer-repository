@@ -1,4 +1,4 @@
-import { PrayerGrid } from '@/components/public/PrayerGrid'
+import { PrayerGrid } from '../components/public/PrayerGrid'
 import { ProgramHeader } from '@/components/public/ProgramHeader'
 import { Footer } from '@/components/public/Footer'
 

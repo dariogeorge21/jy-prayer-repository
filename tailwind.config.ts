@@ -3,47 +3,12 @@ import type { Config } from 'tailwindcss'
 const config: Config = {
   darkMode: 'class',
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      colors: {
-        // Spiritual color palette
-        primary: {
-          50: '#f5f3f0',
-          100: '#e8e3dc',
-          200: '#d4c7b8',
-          300: '#bea78f',
-          400: '#a88b6b',
-          500: '#8B7355', // Main brand color
-          600: '#7a6349',
-          700: '#64503c',
-          800: '#4d3d2e',
-          900: '#3a2e22',
-        },
-        accent: {
-          50: '#fefcf3',
-          100: '#fef7d8',
-          200: '#fdedaa',
-          300: '#fce182',
-          400: '#fad147',
-          500: '#D4AF37', // Gold accent
-          600: '#b8962e',
-          700: '#987a24',
-          800: '#7a6120',
-          900: '#5e4a19',
-        },
-        surface: {
-          DEFAULT: '#1a1a1a',
-          elevated: '#242424',
-          overlay: '#2e2e2e',
-        },
-        background: {
-          DEFAULT: '#0f0f0f',
-        },
-      },
+      colors: {},
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         serif: ['var(--font-lora)', 'Georgia', 'serif'],
